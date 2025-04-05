@@ -66,17 +66,12 @@ app.post("/login", (req, res) => {
         }
     });
 });
-
-// --------------------- Student Entry & Report Endpoints ---------------------
-
-// Endpoint to store student details from studentdetails.html
 app.post("/entries", (req, res) => {
     const { reg_no, name, block, room_no, dining_mess, mess_type, food_suggestion, meal_type, feasibility } = req.body;
     // Ensure required fields are present
     if (!reg_no || !name || !block || !room_no || !dining_mess || !mess_type || !meal_type || !feasibility) {
         return res.status(400).json({ error: "All required fields must be provided" });
     }
-    // Insert current timestamp using NOW() for entry_date
     const sql = `INSERT INTO mess_entries 
                  (reg_no, name, block, room_no, dining_mess, mess_type, food_suggestion, meal_type, feasibility, entry_date) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`;
@@ -88,14 +83,10 @@ app.post("/entries", (req, res) => {
         res.json({ success: true, message: "Stored successfully!" });
     });
 });
-
-// Helper function to generate an Excel report using ExcelJS
 function generateExcelReport(data, fileName) {
     return new Promise((resolve, reject) => {
         let workbook = new ExcelJS.Workbook();
         let worksheet = workbook.addWorksheet("Report");
-
-        // Define columns for the report
         worksheet.columns = [
             { header: "Reg No", key: "reg_no", width: 15 },
             { header: "Name", key: "name", width: 20 },

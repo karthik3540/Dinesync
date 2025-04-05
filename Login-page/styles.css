@@ -139,6 +139,18 @@ footer {
     }
 }
 
+  .step {
+    display: none;
+  }
+  .step.active {
+    display: block;
+  }
+  .thank-you {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+  }
+
 .btn-custom {
     background-color: var(--accent);
     color: #fff;
