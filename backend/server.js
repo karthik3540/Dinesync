@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 
 // Database Connection
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Karthik@9999",  // Change this if needed
-    database: "mess_system"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 db.connect(err => {
     if (err) {
@@ -210,7 +210,7 @@ app.get("/reports/meal/:meal", (req, res) => {
 });
 
 // --------------------- Start Server ---------------------
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
