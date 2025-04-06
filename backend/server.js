@@ -6,17 +6,16 @@ const ExcelJS    = require("exceljs");
 const PDFDocument= require("pdfkit");
 const fs         = require("fs");
 const app        = express();
-
+require('dotenv').config();
 app.use(cors());
 app.use(bodyParser.json());
-
-// Database Connection
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
+const connection = mysql.createConnection({
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
+    port: process.env.MYSQLPORT
+  });
 db.connect(err => {
     if (err) {
         console.error("Database connection failed:", err);
