@@ -9,7 +9,8 @@ const app        = express();
 require('dotenv').config();
 app.use(cors());
 app.use(bodyParser.json());
-const connection = mysql.createConnection({
+const db = mysql.createConnection(
+{
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
