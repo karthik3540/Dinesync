@@ -1,31 +1,34 @@
 const express    = require("express");
-const mysql      = require("mysql");
+const mysql      = require('mysql2')
 const bodyParser = require("body-parser");
 const cors       = require("cors");
 const ExcelJS    = require("exceljs");
 const PDFDocument= require("pdfkit");
 const fs         = require("fs");
 const app        = express();
-require('dotenv').config();
+require('dotenv').config({ path: 'C:\\Users\\karthik\\OneDrive\\Desktop\\MessForm\\.env' });
+// 👈 Important change!
+
 app.use(cors());
 app.use(bodyParser.json());
-const db = mysql.createConnection(
-{
-    host: process.env.MYSQLHOST,
-    user: process.env.MYSQLUSER,
-    password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE,
-    port: process.env.MYSQLPORT
-  });
-db.connect(err => {
-    if (err) {
-        console.error("Database connection failed:", err);
-    } else {
-        console.log("Connected to MySQL database");
-    }
+require('dotenv').config();
+require('dotenv').config({ path: 'C:/Users/karthik/OneDrive/Desktop/MessForm/.env' });
+
+const connection = mysql.createConnection({
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT
 });
 
-// --------------------- User Endpoints ---------------------
+connection.connect((err) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+  } else {
+    console.log('Connected to database ✅');
+  }
+});
 // Register User (Signup)
 app.post("/register", (req, res) => {
     const { username, password, role } = req.body;
@@ -210,7 +213,7 @@ app.get("/reports/meal/:meal", (req, res) => {
 });
 
 // --------------------- Start Server ---------------------
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
